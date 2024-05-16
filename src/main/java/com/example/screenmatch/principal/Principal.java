@@ -1,9 +1,12 @@
 package com.example.screenmatch.principal;
 
 import com.example.screenmatch.model.DadosSerie;
+import com.example.screenmatch.model.DadosTemporada;
 import com.example.screenmatch.service.ConsumoApi;
 import com.example.screenmatch.service.ConverteDados;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Principal {
@@ -18,9 +21,19 @@ public class Principal {
     public void exibeMenu(){
         System.out.println("Digite o nome da série para busca:");
         var nomeSerie = leitura.nextLine();
-        var json = consumo.obterDados(ENDERECO + nomeSerie.replace(" ", "+") + API_KEY);
+        nomeSerie = nomeSerie.replace(" ", "+");
+        var json = consumo.obterDados(ENDERECO + nomeSerie + API_KEY);
         DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
         System.out.println(dados);
+
+        List<DadosTemporada> temporadas = new ArrayList<>();
+
+        for (int i=1; i<=dados.totalTemporadas(); i++) {
+            json = consumo.obterDados(ENDERECO + nomeSerie + "&season=" + i + API_KEY);
+            DadosTemporada dadosTemporada = conversor.obterDados(json, DadosTemporada.class);
+            temporadas.add(dadosTemporada);
+        }
+        temporadas.forEach(System.out::println);
 
     }
 }
