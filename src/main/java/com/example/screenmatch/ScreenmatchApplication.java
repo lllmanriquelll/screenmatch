@@ -1,16 +1,9 @@
 package com.example.screenmatch;
 
-import com.example.screenmatch.model.DadosEpisodio;
-import com.example.screenmatch.model.DadosSerie;
-import com.example.screenmatch.model.DadosTemporada;
-import com.example.screenmatch.service.ConsumoApi;
-import com.example.screenmatch.service.ConverteDados;
+import com.example.screenmatch.principal.Principal;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class ScreenmatchApplication implements CommandLineRunner {
@@ -21,8 +14,10 @@ public class ScreenmatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		//System.out.println("Primeiro projeto Spring!");
-		ConsumoApi consumoApi = new ConsumoApi();
+		Principal principal = new Principal();
+		principal.exibeMenu();
+
+		/*ConsumoApi consumoApi = new ConsumoApi();
 		var json = consumoApi.obterDados("https://www.omdbapi.com/?i=tt2575988&apikey=f48b743");
 		System.out.println(json);
 		ConverteDados conversor = new ConverteDados();
@@ -41,5 +36,7 @@ public class ScreenmatchApplication implements CommandLineRunner {
 			temporadas.add(dadosTemporada);
 		}
 		temporadas.forEach(System.out::println);
+		*/
+
 	}
 }
