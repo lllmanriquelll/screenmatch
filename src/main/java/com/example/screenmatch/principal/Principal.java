@@ -1,11 +1,13 @@
 package com.example.screenmatch.principal;
 
+import com.example.screenmatch.model.DadosEpisodio;
 import com.example.screenmatch.model.DadosSerie;
 import com.example.screenmatch.model.DadosTemporada;
 import com.example.screenmatch.service.ConsumoApi;
 import com.example.screenmatch.service.ConverteDados;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -34,7 +36,13 @@ public class Principal {
             DadosTemporada dadosTemporada = conversor.obterDados(json, DadosTemporada.class);
             DadosSerie dadosSerie = conversor.obterDados(json, DadosSerie.class);
             System.out.println(dadosSerie.titulo() + " - Temporada " + i);
-            dadosTemporada.episodios().forEach(t -> System.out.println(t.numero() + " - " + t.titulo()));
+            //dadosTemporada.episodios().forEach(t -> System.out.println(t.numero() + " - " + t.titulo()));
+            for (int j=1; j<=dadosTemporada.episodios().size(); j++) {
+                json = consumo.obterDados(ENDERECO + nomeSerie + "&season=" + i + "&Episode=" + j + API_KEY);
+                DadosEpisodio dadosEpisodio = conversor.obterDados(json, DadosEpisodio.class);
+                System.out.println(dadosEpisodio.avaliacao());
+            }
+
             //temporadas.add(dadosTemporada);
         }
         //temporadas.forEach(System.out::println);
