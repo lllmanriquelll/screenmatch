@@ -24,16 +24,21 @@ public class Principal {
         nomeSerie = nomeSerie.replace(" ", "+");
         var json = consumo.obterDados(ENDERECO + nomeSerie + API_KEY);
         DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
-        System.out.println(dados);
+        //System.out.println(dados);
 
-        List<DadosTemporada> temporadas = new ArrayList<>();
+        //List<DadosTemporada> temporadas = new ArrayList<>();
+
 
         for (int i=1; i<=dados.totalTemporadas(); i++) {
             json = consumo.obterDados(ENDERECO + nomeSerie + "&season=" + i + API_KEY);
             DadosTemporada dadosTemporada = conversor.obterDados(json, DadosTemporada.class);
-            temporadas.add(dadosTemporada);
+            DadosSerie dadosSerie = conversor.obterDados(json, DadosSerie.class);
+            System.out.println(dadosSerie.titulo() + " - Temporada " + i);
+            dadosTemporada.episodios().forEach(t -> System.out.println(t.numero() + " - " + t.titulo()));
+            //temporadas.add(dadosTemporada);
         }
-        temporadas.forEach(System.out::println);
+        //temporadas.forEach(System.out::println);
 
+        //temporadas.forEach(t -> t.episodios().forEach(e -> System.out.println(e.titulo())));
     }
 }
